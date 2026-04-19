@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Muratore — Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #e8e0f8;
+    --paper: #0e0a1a;
+    --paper2: #130e22;
+    --accent: #4dff91;
+    --accent2: #39d677;
+    --muted: #8878b0;
+    --rule: #2a1f44;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─────────────────────────────── */
+  header {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem 6vw 5rem;
+    color: #f0eaff;
+    overflow: hidden;
+  }
+
+  #dm-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .header-content { position: relative; z-index: 2; }
+
+  .header-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  header h1 {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 1;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+    text-shadow: 0 0 60px rgba(120,60,200,0.6);
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(77,255,145,0.4);
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: #b8a8d8;
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+    line-height: 1.7;
+  }
+
+  .header-contact {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+
+  .header-contact a {
+    color: #e0d4ff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid rgba(200,180,255,0.2);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .header-contact a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 6vw;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #5a4080;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+    z-index: 2;
+  }
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: #5a4080;
+    animation: scrollLine 2s 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.3); opacity: 0.3; } }
+
+  /* ─── MAIN LAYOUT ─────────────────────────── */
+  main {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ─── SIDEBAR ─────────────────────────────── */
+  aside {
+    background: var(--paper2);
+    border-right: 1px solid var(--rule);
+    padding: 4rem 2rem 4rem 6vw;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .aside-section { margin-bottom: 3rem; }
+
+  .aside-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .aside-nav a {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .aside-nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .skill-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 400;
+    background: #1c1430;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 3px 8px;
+    margin: 3px 2px;
+    color: #c8b8f0;
+    letter-spacing: 0.02em;
+  }
+
+  .cert-item {
+    font-size: 12.5px;
+    color: #c8b8f0;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .cert-year {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  /* ─── CONTENT AREA ────────────────────────── */
+  .content {
+    padding: 4rem 6vw 6rem 4rem;
+  }
+
+  section { margin-bottom: 5rem; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-number {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── SUMMARY ─────────────────────────────── */
+  .summary-text {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #c8b8e8;
+    max-width: 640px;
+    font-weight: 300;
+  }
+
+  .summary-text strong {
+    font-weight: 500;
+    color: var(--accent2);
+  }
+
+  /* ─── EDUCATION ───────────────────────────── */
+  .edu-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    left: -4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .edu-card:hover::before { opacity: 1; }
+
+  .edu-degree {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .edu-school {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .edu-meta {
+    text-align: right;
+  }
+
+  .edu-years {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .edu-gpa {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent2);
+    margin-top: 0.25rem;
+  }
+
+  /* ─── EXPERIENCE ──────────────────────────── */
+  .job {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .job.visible { opacity: 1; transform: none; }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .job-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+
+  .job-company {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .job-years {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .job-bullets {
+    list-style: none;
+    margin-top: 0.6rem;
+  }
+
+  .job-bullets li {
+    font-size: 14px;
+    color: #c0b0e0;
+    font-weight: 300;
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .job-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ─── AWARD BADGE ─────────────────────────── */
+  .award-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #1a2a18;
+    border: 1px solid #3a6a30;
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    color: #7adf80;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── ANIMATIONS ──────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 780px) {
+    main { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; padding: 3rem 6vw; border-right: none; border-bottom: 1px solid var(--rule); }
+    .content { padding: 3rem 6vw; }
+    .edu-card { grid-template-columns: 1fr; }
+    .edu-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <canvas id="dm-canvas"></canvas>
+  <div class="header-content">
+    <div class="header-label">Curriculum Vitae · Annandale, Virginia</div>
+    <h1>Robert<br><em>Muratore</em></h1>
+    <p class="header-sub">Detail-oriented professional bridging health sciences, information systems, and cybersecurity — with a commitment to accuracy, compliance, and service.</p>
+    <div class="header-contact">
+      <a href="mailto:robertmuratore1998@gmail.com">✉ robertmuratore1998@gmail.com</a>
+      <a href="tel:7038321086">☏ 703-832-1086</a>
+      <a href="https://linkedin.com/in/robert-m-bab69b267" target="_blank">↗ LinkedIn Profile</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</header>
+
+<main>
+  <aside>
+    <div class="aside-section">
+      <span class="aside-label">Navigate</span>
+      <nav class="aside-nav">
+        <a href="#summary">Summary</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+      </nav>
+    </div>
+
+    <div class="aside-section">
+      <span class="aside-label">Certifications</span>
+      <div class="cert-item"><span class="cert-year">2024</span>CCNA – Cisco</div>
+      <div class="cert-item"><span class="cert-year">2025</span>SailPoint Identity Security Leader</div>
+      <div class="cert-item"><span class="cert-year">2025</span>CPR / BLS – AHA</div>
+    </div>
+
+    <div class="aside-section">
+      <span class="aside-label">Core Skills</span>
+      <div>
+        <span class="skill-tag">Records Processing</span>
+        <span class="skill-tag">HIPAA / FERPA</span>
+        <span class="skill-tag">Patient Check-In</span>
+        <span class="skill-tag">Scheduling</span>
+        <span class="skill-tag">Data QC</span>
+        <span class="skill-tag">MS Excel</span>
+        <span class="skill-tag">MS Outlook</span>
+        <span class="skill-tag">Medical Terminology</span>
+        <span class="skill-tag">Customer Service</span>
+        <span class="skill-tag">Documentation</span>
+        <span class="skill-tag">Teamwork</span>
+        <span class="skill-tag">Communication</span>
+      </div>
+    </div>
+
+    <div class="aside-section">
+      <span class="aside-label">Experience</span>
+      <div style="font-family: 'DM Serif Display', serif; font-size: 2.2rem; line-height:1; color: var(--accent);">12</div>
+      <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">years across<br>various roles</div>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <section id="summary">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2>Professional Summary</h2>
+      </div>
+      <p class="summary-text">
+        Detail-oriented candidate with a strong foundation in <strong>health sciences</strong>, <strong>medical terminology</strong>, and <strong>information systems</strong>. Experienced in data accuracy, electronic records management, HIPAA-compliant environments, and administrative support. Proven ability to support front desk operations, review documentation, and maintain confidential student health records in a fast-paced university setting.
+      </p>
+    </section>
+
+    <section id="education">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2>Education</h2>
+      </div>
+
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">Bachelor of Science — Information Systems &amp; Operations Management</div>
+          <div class="edu-school">George Mason University</div>
+        </div>
+        <div class="edu-meta">
+          <div class="edu-years">2016 – 2021</div>
+          <div class="edu-gpa">Major GPA 3.5</div>
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">Associate of Science — Health Sciences</div>
+          <div class="edu-school">Northern Virginia Community College</div>
+        </div>
+        <div class="edu-meta">
+          <div class="edu-years">2022 – 2024</div>
+          <div class="edu-gpa">GPA 3.63</div>
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">High School Diploma</div>
+          <div class="edu-school">Bishop O'Connell High School</div>
+        </div>
+        <div class="edu-meta">
+          <div class="edu-years">2012 – 2016</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2>Work Experience</h2>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Seasonal Package Organizer</div>
+            <div class="job-company">United States Postal Service · Annandale, VA</div>
+          </div>
+          <div class="job-years">2025</div>
+        </div>
+        <ul class="job-bullets">
+          <li>Processed high volumes of items with accuracy, organization, and mindfulness.</li>
+          <li>Followed established procedures in a time-sensitive environment.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Cyber Threat Analyst Jr.</div>
+            <div class="job-company">ECS Federal · Fairfax, VA</div>
+          </div>
+          <div class="job-years">2021 – 2022</div>
+        </div>
+        <ul class="job-bullets">
+          <li>Reviewed and validated sensitive data across multiple systems to ensure accuracy and compliance.</li>
+          <li>Generated routine reports and documented findings to support operational workflows.</li>
+          <li>Maintained strict confidentiality of protected and sensitive information.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Front Desk Security Officer / Courier</div>
+            <div class="job-company">Allied Universal</div>
+          </div>
+          <div class="job-years">2017 – 2023</div>
+        </div>
+        <ul class="job-bullets">
+          <li>Provided professional front-facing service while ensuring safety and compliance.</li>
+          <li>Communicated effectively with diverse populations in high-responsibility settings.</li>
+        </ul>
+        <div class="award-badge">★ Security Officer Award — reliability, punctuality &amp; professionalism</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Customer Service Associate</div>
+            <div class="job-company">Kmart</div>
+          </div>
+          <div class="job-years">2014 – 2016</div>
+        </div>
+        <ul class="job-bullets">
+          <li>Delivered customer-focused retail service in a demanding environment.</li>
+          <li>Oversaw transactions, returns, and customer inquiries with accuracy.</li>
+          <li>Supported store operations including stocking and front-end organization.</li>
+        </ul>
+      </div>
+
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-name">Robert Muratore · 2026</span>
+    <div class="view-counter">
+      <span class="view-icon">◎</span>
+      <span id="view-count">—</span>
+      <span class="view-label">views</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+footer {
+  background: #07040f;
+  border-top: 1px solid #2a1f44;
+  padding: 1.5rem 6vw;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-name {
+  font-size: 12px;
+  color: #5a4880;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.view-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #130e22;
+  border: 1px solid #2a1f44;
+  border-radius: 20px;
+  padding: 5px 14px;
+}
+.view-icon {
+  font-size: 11px;
+  color: #4dff91;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+#view-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4dff91;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 2ch;
+}
+.view-label {
+  font-size: 11px;
+  color: #5a4880;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+</style>
+
+<script>
+  // ── Dark Matter canvas ──────────────────────
+  const canvas = document.getElementById('dm-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Stars
+  const stars = Array.from({length: 80}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.5 + 0.3,
+    twinkle: Math.random() * Math.PI * 2,
+    speed: Math.random() * 0.02 + 0.005
+  }));
+
+  // Nebula blobs
+  const blobs = [
+    { cx:0.5, cy:0.4, rx:0.55, ry:0.35, col:[110,30,200], a:0.18 },
+    { cx:0.3, cy:0.6, rx:0.4,  ry:0.25, col:[80,10,160],  a:0.14 },
+    { cx:0.7, cy:0.3, rx:0.35, ry:0.28, col:[140,50,210], a:0.12 },
+    { cx:0.55,cy:0.55,rx:0.3,  ry:0.2,  col:[180,80,230], a:0.10 },
+  ];
+
+  let t = 0;
+
+  function drawNebula(blob, t) {
+    const ox = Math.sin(t * 0.3 + blob.cy * 5) * 0.06;
+    const oy = Math.cos(t * 0.25 + blob.cx * 4) * 0.04;
+    const cx = (blob.cx + ox) * W;
+    const cy = (blob.cy + oy) * H;
+    const rx = blob.rx * W * (1 + Math.sin(t * 0.4) * 0.05);
+    const ry = blob.ry * H * (1 + Math.cos(t * 0.35) * 0.05);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+    const [r, gv, b] = blob.col;
+    g.addColorStop(0,   `rgba(${r},${gv},${b},${blob.a})`);
+    g.addColorStop(0.5, `rgba(${r},${gv},${b},${blob.a * 0.4})`);
+    g.addColorStop(1,   `rgba(${r},${gv},${b},0)`);
+    ctx.save();
+    ctx.scale(1, ry / rx);
+    ctx.beginPath();
+    ctx.arc(cx, cy * (rx / ry), rx, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Flowing light streaks
+  const streaks = Array.from({length: 5}, (_, i) => ({
+    phase: i * 1.2,
+    speed: 0.12 + i * 0.04,
+    width: 0.15 + i * 0.06,
+    alpha: 0.06 + i * 0.02,
+  }));
+
+  function drawStreak(s, t) {
+    const y = (0.2 + Math.sin(t * s.speed + s.phase) * 0.35) * H;
+    const g = ctx.createLinearGradient(0, y - s.width * H, W, y + s.width * H);
+    g.addColorStop(0,   'rgba(160,80,255,0)');
+    g.addColorStop(0.3, `rgba(180,100,255,${s.alpha})`);
+    g.addColorStop(0.5, `rgba(220,140,255,${s.alpha * 1.5})`);
+    g.addColorStop(0.7, `rgba(180,100,255,${s.alpha})`);
+    g.addColorStop(1,   'rgba(160,80,255,0)');
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, y - s.width * H * 0.5);
+    ctx.bezierCurveTo(
+      W * 0.25, y - s.width * H * 0.8,
+      W * 0.75, y + s.width * H * 0.3,
+      W, y + s.width * H * 0.1
+    );
+    ctx.lineTo(W, y + s.width * H);
+    ctx.bezierCurveTo(
+      W * 0.75, y + s.width * H * 1.2,
+      W * 0.25, y + s.width * H * 0.5,
+      0, y + s.width * H * 0.5
+    );
+    ctx.closePath();
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    // Deep space base
+    ctx.fillStyle = '#08051a';
+    ctx.fillRect(0, 0, W, H);
+
+    // Nebula blobs
+    blobs.forEach(b => drawNebula(b, t));
+
+    // Streaks
+    streaks.forEach(s => drawStreak(s, t));
+
+    // Stars
+    stars.forEach(s => {
+      s.twinkle += s.speed;
+      const alpha = 0.4 + Math.sin(s.twinkle) * 0.5;
+      // warm orange-gold tint on ~15% of stars
+      const warm = s.r > 1.2;
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = warm
+        ? `rgba(255,180,80,${alpha * 0.9})`
+        : `rgba(220,200,255,${alpha})`;
+      ctx.fill();
+    });
+
+    t += 0.008;
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  // ── View counter (persistent storage) ────────
+  (async () => {
+    const KEY = 'resume-views';
+    let count = 0;
+    try {
+      const res = await window.storage.get(KEY, true);
+      count = res ? parseInt(res.value, 10) : 0;
+    } catch(e) { count = 0; }
+    count += 1;
+    try { await window.storage.set(KEY, String(count), true); } catch(e) {}
+    const el = document.getElementById('view-count');
+    if (el) el.textContent = count.toLocaleString();
+  })();
+  const jobs = document.querySelectorAll('.job');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  jobs.forEach(j => io.observe(j));
+</script>
+</body>
+</html>
